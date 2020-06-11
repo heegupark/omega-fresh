@@ -47,13 +47,13 @@ app.get('/api/products/:productId', (req, res, next) => {
   const params = [productId];
   db.query(sql, params)
     .then(result => {
-      const grade = result.rows[0];
-      if (!grade) {
+      const product = result.rows[0];
+      if (!product) {
         res.status(404).json({
           error: `Cannot find grade with "productId" ${productId}`
         });
       } else {
-        res.json(grade);
+        res.json(product);
       }
     })
     .catch(err => {
