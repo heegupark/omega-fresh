@@ -7,8 +7,7 @@ const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 
 const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
@@ -27,38 +26,6 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => {
       console.error(err);
       return res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
-});
-
-app.get('/api/products/:productId', (req, res, next) => {
-  const productId = parseInt(req.params.productId);
-  if (!Number.isInteger(productId) || productId <= 0) {
-    return res.status(400).json({
-      error: '"productId" must be a positive integer'
-    });
-  }
-  const sql = `
-    SELECT "productId", "name", "price", "image", "shortDescription"
-      FROM "products"
-     WHERE "productId" = $1
-  `;
-  const params = [productId];
-  db.query(sql, params)
-    .then(result => {
-      const product = result.rows[0];
-      if (!product) {
-        res.status(404).json({
-          error: `Cannot find grade with "productId" ${productId}`
-        });
-      } else {
-        res.json(product);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
         error: 'An unexpected error occurred.'
       });
     });
