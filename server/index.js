@@ -7,11 +7,29 @@ const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 
 const app = express();
+app.use(express.json());
 
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
 app.use(express.json());
+
+app.get('/api/products', (req, res, next) => {
+  const sql = `
+    SELECT "productId", "name", "price", "image", "shortDescription"
+      FROM "products"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
 
 app.get('/api/health-check', (req, res, next) => {
   db.query('select \'successfully connected\' as "message"')
