@@ -98,7 +98,7 @@ app.post('/api/cart/', (req, res, next) => {
   db.query(sqlInitialQuery, valueInitial)
     .then(result => {
       if (!result.rows.length) {
-        return next(new ClientError(`Cannot find the productId:" ${productId}`, 400));
+        throw new ClientError(`Cannot find the productId:" ${productId}`, 400);
       }
       if (!req.session.cartId) {
         const sqlForCreateCart = `
