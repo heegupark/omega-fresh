@@ -10,7 +10,7 @@ class ProductListItem extends Component {
     return (
       <div className="col-4 card-deck mb-3">
         <div className="card" id={productId}>
-          <img className="card-img-top" src={image} alt={name} />
+          <img className="card-img-top img-fluid rounded mx-auto d-block img-custom w-100" src={image} alt={name} />
           <div className="card-body">
             <h5 className="card-title">{name}</h5>
             <h6 className="card-subtitle">{formatter.format(price / 100)}</h6>
