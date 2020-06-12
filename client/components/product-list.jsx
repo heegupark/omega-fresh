@@ -27,23 +27,23 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.state;
+    const { setView } = this.props;
     return (
-      <main className="container-fluid">
-        <div className="row justify-content-center">
-          {
-            products.map((product, index) => {
-              const { productId, name, price, image, shortDescription } = product;
-              return <ProductListItem
-                key={index}
-                productId={productId}
-                name={name}
-                price={price}
-                image={image}
-                shortDescription={shortDescription} />;
-            })
-          }
-        </div>
-      </main>
+      <div className="row justify-content-center">
+        {
+          products.map((product, index) => {
+            const { productId, name, price, image, shortDescription } = product;
+            return <ProductListItem
+              key={index}
+              productId={productId}
+              name={name}
+              price={price}
+              image={image}
+              shortDescription={shortDescription}
+              setView={setView} />;
+          })
+        }
+      </div>
     );
   }
 }
