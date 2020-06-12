@@ -3,6 +3,10 @@ body {
   font-size: 14px;
 }
 
+.shop-title-custom {
+  margin-left: 25%;
+}
+
 .container-custom > main {
   width: 80%;
   margin: auto;
@@ -23,7 +27,7 @@ body {
   object-fit: cover;
 }
 
-.back-to-catalog:hover {
+.back-to-catalog {
   cursor: pointer;
 }
 
@@ -39,6 +43,12 @@ body {
   transform: scale(1.01);
   box-shadow: 0.2px 0.2px 0.2px 0.2px #2b2b2b;
   cursor: pointer;
+}
+
+.cart-custom {
+  font-size: 20px;
+  margin-right: 10%;
+  margin-top: 5px;
 }
 
 @media (max-width: 1199.98px) {
@@ -57,8 +67,24 @@ body {
   .container-custom > main {
     width: 100%;
   }
+
+  .shop-title-custom {
+    margin-left: 5%;
+  }
+
+  .cart-custom {
+    margin-right: 5%;
+  }
 }
 
 @media (max-width: 575.98px) {
+  .shop-title-custom {
+    margin-left: 2%;
+    font-size: 28px;
+  }
 
+  .cart-custom {
+    margin-right: 2%;
+    font-size: 18px;
+  }
 }

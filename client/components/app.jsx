@@ -12,9 +12,12 @@ export default class App extends React.Component {
       view: {
         name: 'catalog',
         params: {}
-      }
+      },
+      cart: []
     };
     this.setView = this.setView.bind(this);
+    this.getCartItems = this.getCartItems.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +26,8 @@ export default class App extends React.Component {
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
+
+    this.getCartItems();
   }
 
   setView(string, object) {
@@ -34,8 +39,36 @@ export default class App extends React.Component {
     });
   }
 
+  getCartItems() {
+    fetch('/api/cart')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          cart: data
+        });
+      })
+      .catch(err => console.error(err.message));
+  }
+
+  addToCart(product) {
+    fetch('/api/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          cart: [...this.state.cart, data]
+        });
+      })
+      .catch(err => console.error(err.message));
+  }
+
   render() {
-    const { setView } = this;
+    const { setView, addToCart } = this;
     const { name, params } = this.state.view;
     let element = null;
     switch (name) {
@@ -48,14 +81,15 @@ export default class App extends React.Component {
       case 'details':
         element = (
           <main>
-            <ProductDetails productId={params.productId} setView={setView} />
+            <ProductDetails addToCart={addToCart} productId={params.productId} setView={setView} />
           </main>);
         break;
     }
+    const cartItemCount = this.state.cart.length;
     return this.state.isLoading
       ? (
         <div>
-          <Header />
+          <Header cartItemCount={cartItemCount} />
           <div className="row mt-5">
             <div className="col-sm text-center">
               <h1 className="mb-5">Testing connections...</h1>
@@ -67,7 +101,7 @@ export default class App extends React.Component {
       )
       : (
         <div className="container-fluid container-custom">
-          <Header />
+          <Header cartItemCount={cartItemCount} />
           {element}
         </div>
       );
