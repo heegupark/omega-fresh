@@ -8,7 +8,6 @@ const sessionMiddleware = require('./session-middleware');
 
 const app = express();
 app.use(express.json());
-
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
@@ -54,6 +53,98 @@ app.get('/api/products/:productId', (req, res, next) => {
       } else {
         res.json(product);
       }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+app.get('/api/cart/', (req, res, next) => {
+  const sql = `
+    SELECT "c"."cartItemId",
+            "c"."price",
+            "p"."productId",
+            "p"."image",
+            "p"."name",
+            "p"."shortDescription"
+        FROM "cartItems" AS "c"
+        JOIN "products" AS "p" USING ("productId")
+      WHERE "c"."cartId" = $1
+  `;
+  const value = [req.session.cartId];
+  db.query(sql, value)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.post('/api/cart/', (req, res, next) => {
+  const { productId, price } = req.body;
+  if (!Number.isInteger(productId) || productId <= 0) {
+    return next(new ClientError('"productId" must be a positive integer', 400));
+  }
+  const sqlInitialQuery = `
+    SELECT "productId"
+    FROM "products"
+    WHERE "productId" = $1
+  `;
+  const valueInitial = [productId];
+  db.query(sqlInitialQuery, valueInitial)
+    .then(result => {
+      if (!result.rows.length) {
+        throw new ClientError(`Cannot find the productId:" ${productId}`, 400);
+      }
+      if (!req.session.cartId) {
+        const sqlForCreateCart = `
+          INSERT INTO "carts" ("cartId", "createdAt")
+          VALUES (default, default)
+          RETURNING "cartId"
+        `;
+        return db.query(sqlForCreateCart)
+          .then(result => {
+            return { cartId: result.rows[0].cartId, price: price };
+          });
+      } else {
+        return { cartId: req.session.cartId, price: price };
+      }
+    })
+    .then(result => {
+      req.session.cartId = result.cartId;
+      const sqlForCreateCartItem = `
+          INSERT INTO "cartItems" ("cartId", "productId", "price")
+          VALUES ($1, $2, $3)
+          RETURNING "cartItemId"
+        `;
+      const valuesForCartItem = [req.session.cartId, productId, Number(price)];
+      return db.query(sqlForCreateCartItem, valuesForCartItem)
+        .then(result => {
+          return { cartItemId: result.rows[0].cartItemId };
+        });
+    })
+    .then(result => {
+      req.session.cartItemId = result.cartItemId;
+      const sqlForRetriveData = `
+            SELECT "c"."cartItemId",
+                    "c"."price",
+                    "p"."productId",
+                    "p"."image",
+                    "p"."name",
+                    "p"."shortDescription"
+               FROM "cartItems" AS "c"
+               JOIN "products" AS "p" USING ("productId")
+              WHERE "c"."cartItemId" = $1
+            `;
+      const valuesForRetriveData = [req.session.cartItemId];
+      return db.query(sqlForRetriveData, valuesForRetriveData)
+        .then(result => {
+          res.status(201).json(result.rows[0]);
+        });
     })
     .catch(err => {
       console.error(err);
