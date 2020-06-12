@@ -62,7 +62,7 @@ app.get('/api/products/:productId', (req, res, next) => {
     });
 });
 
-app.get('/api/cart/', (req, res, next) => {
+app.get('/api/cart', (req, res, next) => {
   const sql = `
     SELECT "c"."cartItemId",
             "c"."price",
@@ -84,7 +84,7 @@ app.get('/api/cart/', (req, res, next) => {
     });
 });
 
-app.post('/api/cart/', (req, res, next) => {
+app.post('/api/cart', (req, res, next) => {
   const { productId, price } = req.body;
   if (!Number.isInteger(productId) || productId <= 0) {
     return next(new ClientError('"productId" must be a positive integer', 400));
@@ -145,6 +145,41 @@ app.post('/api/cart/', (req, res, next) => {
         .then(result => {
           res.status(201).json(result.rows[0]);
         });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+app.post('/api/order', (req, res, next) => {
+  const { cartId } = req.session;
+  const { name, creditCard, shippingAddress } = req.body;
+  if (!cartId) {
+    return next(new ClientError('"cartId" is not existed. Cart is empty.', 400));
+  }
+  if (!name) {
+    return next(new ClientError('"name" is required.', 400));
+  }
+  if (!creditCard) {
+    return next(new ClientError('"creditCard" is required.', 400));
+  }
+  if (!shippingAddress) {
+    return next(new ClientError('"shippingAddress" is required.', 400));
+  }
+  const sql = `
+    INSERT INTO "orders" ("cartId", "name", "creditCard", "shippingAddress")
+    VALUES ($1, $2, $3, $4)
+    RETURNING *
+  `;
+  const values = [cartId, name, creditCard, shippingAddress];
+
+  db.query(sql, values)
+    .then(result => {
+      req.session.destroy();
+      res.status(201).json(result.rows[0]);
     })
     .catch(err => {
       console.error(err);
