@@ -8,6 +8,7 @@ class ProductDetails extends Component {
       isLoading: true
     };
     this.handleBackToCatalogClick = this.handleBackToCatalogClick.bind(this);
+    this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +33,12 @@ class ProductDetails extends Component {
     this.props.setView('catalog', {});
   }
 
+  handleAddToCartClick() {
+    const { productId, price } = this.state.product;
+    const addProduct = { productId, price };
+    this.props.addToCart(addProduct);
+  }
+
   render() {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -39,7 +46,7 @@ class ProductDetails extends Component {
     });
     if (this.state.product) {
       const { productId, image, name, price, shortDescription, longDescription } = this.state.product;
-      const { handleBackToCatalogClick } = this;
+      const { handleBackToCatalogClick, handleAddToCartClick } = this;
       const longDescriptionChanged = longDescription.split('\\n.').map((item, i) => {
         return (<span key={i}>{`${item}.`}<br /><br /></span>);
       });
@@ -79,6 +86,11 @@ class ProductDetails extends Component {
                   <div className="row">
                     <div className="col-sm mx-2 my-2">
                       <p>{shortDescription}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm mx-2 my-2">
+                      <button className="btn btn-outline-dark" onClick={handleAddToCartClick}>Add To Cart</button>
                     </div>
                   </div>
                 </div>
