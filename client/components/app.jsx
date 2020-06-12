@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
+import CartSummary from './cart-summary';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -70,6 +71,7 @@ export default class App extends React.Component {
   render() {
     const { setView, addToCart } = this;
     const { name, params } = this.state.view;
+    const { cart } = this.state;
     let element = null;
     switch (name) {
       case 'catalog':
@@ -82,6 +84,12 @@ export default class App extends React.Component {
         element = (
           <main>
             <ProductDetails addToCart={addToCart} productId={params.productId} setView={setView} />
+          </main>);
+        break;
+      case 'cart':
+        element = (
+          <main>
+            <CartSummary setView={setView} cart={cart} />
           </main>);
         break;
     }
@@ -101,7 +109,7 @@ export default class App extends React.Component {
       )
       : (
         <div className="container-fluid container-custom">
-          <Header cartItemCount={cartItemCount} />
+          <Header cartItemCount={cartItemCount} setView={setView}/>
           {element}
         </div>
       );

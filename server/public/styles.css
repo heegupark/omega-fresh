@@ -51,6 +51,22 @@ body {
   margin-top: 5px;
 }
 
+.cart-icon-custom {
+  cursor: pointer;
+}
+
+.cart-img-custom {
+  max-height: 225px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.cart-img-custom {
+  max-height: 225px;
+  width: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 1199.98px) {
   .container-custom > main {
     width: 90%;

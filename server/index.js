@@ -130,7 +130,7 @@ app.post('/api/cart/', (req, res, next) => {
     .then(result => {
       req.session.cartItemId = result.cartItemId;
       const sqlForRetriveData = `
-            SELECT "c"."cartItemId",
+             SELECT "c"."cartItemId",
                     "c"."price",
                     "p"."productId",
                     "p"."image",
