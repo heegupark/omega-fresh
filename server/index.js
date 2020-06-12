@@ -62,7 +62,7 @@ app.get('/api/products/:productId', (req, res, next) => {
     });
 });
 
-app.get('/api/cart/', (req, res) => {
+app.get('/api/cart/', (req, res, next) => {
   const sql = `
     SELECT "c"."cartItemId",
             "c"."price",
@@ -80,17 +80,14 @@ app.get('/api/cart/', (req, res) => {
       res.json(result.rows);
     })
     .catch(err => {
-      console.error(err);
-      return res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
+      next(err);
     });
 });
 
 app.post('/api/cart/', (req, res, next) => {
   const { productId, price } = req.body;
   if (!Number.isInteger(productId) || productId <= 0) {
-    next(new ClientError('"productId" must be a positive integer', 400));
+    return next(new ClientError('"productId" must be a positive integer', 400));
   }
   const sqlInitialQuery = `
     SELECT "productId"
@@ -101,9 +98,7 @@ app.post('/api/cart/', (req, res, next) => {
   db.query(sqlInitialQuery, valueInitial)
     .then(result => {
       if (!result.rows.length) {
-        res.status(400).json({
-          error: `Cannot find the productId:" ${productId}`
-        });
+        return next(new ClientError(`Cannot find the productId:" ${productId}`, 400));
       }
       if (!req.session.cartId) {
         const sqlForCreateCart = `
@@ -121,7 +116,6 @@ app.post('/api/cart/', (req, res, next) => {
     })
     .then(result => {
       req.session.cartId = result.cartId;
-      req.session.save();
       const sqlForCreateCartItem = `
           INSERT INTO "cartItems" ("cartId", "productId", "price")
           VALUES ($1, $2, $3)
@@ -135,7 +129,6 @@ app.post('/api/cart/', (req, res, next) => {
     })
     .then(result => {
       req.session.cartItemId = result.cartItemId;
-      req.session.save();
       const sqlForRetriveData = `
             SELECT "c"."cartItemId",
                     "c"."price",
@@ -148,7 +141,7 @@ app.post('/api/cart/', (req, res, next) => {
               WHERE "c"."cartItemId" = $1
             `;
       const valuesForRetriveData = [req.session.cartItemId];
-      db.query(sqlForRetriveData, valuesForRetriveData)
+      return db.query(sqlForRetriveData, valuesForRetriveData)
         .then(result => {
           res.status(201).json(result.rows[0]);
         });
