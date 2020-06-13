@@ -25,6 +25,7 @@ class CartSummary extends Component {
       for (const i in cart) {
         if (Number(key) === cart[i].productId) {
           array.push({
+            productId: cart[i].productId,
             name: cart[i].name,
             price: cart[i].price,
             image: cart[i].image,
@@ -43,7 +44,7 @@ class CartSummary extends Component {
   }
 
   render() {
-    const { cart, formattedCurrency, getTotal } = this.props;
+    const { cart, formattedCurrency, getTotal, addToCart } = this.props;
     const { handleBackToCatalogClick, groupByItems, handleCheckoutClick } = this;
 
     // Group by item
@@ -72,15 +73,17 @@ class CartSummary extends Component {
               <div className="col-sm">
                 {
                   array.map((item, index) => {
-                    const { name, price, image, shortDescription, amount } = item;
+                    const { productId, name, price, image, shortDescription, amount } = item;
                     return <CartSummaryItem
                       key={index}
+                      productId={productId}
                       name={name}
                       price={price}
                       image={image}
                       shortDescription={shortDescription}
                       amount={amount}
-                      formattedCurrency={formattedCurrency} />;
+                      formattedCurrency={formattedCurrency}
+                      addToCart={addToCart} />;
                   })
                 }
               </div>

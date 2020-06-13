@@ -27,12 +27,13 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.state;
-    const { setView, formattedCurrency } = this.props;
+    const { setView, formattedCurrency, getCountById, cart, addToCart } = this.props;
     return (
       <div className="row justify-content-center">
         {
           products.map((product, index) => {
             const { productId, name, price, image, shortDescription } = product;
+            const amount = getCountById(cart, productId);
             return <ProductListItem
               key={index}
               productId={productId}
@@ -41,7 +42,9 @@ class ProductList extends Component {
               image={image}
               shortDescription={shortDescription}
               setView={setView}
-              formattedCurrency={formattedCurrency} />;
+              formattedCurrency={formattedCurrency}
+              addToCart={addToCart}
+              amount={amount} />;
           })
         }
       </div>

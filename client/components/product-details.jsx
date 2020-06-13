@@ -34,19 +34,23 @@ class ProductDetails extends Component {
   }
 
   handleAddToCartClick() {
-    const { productId, price } = this.state.product;
+    const { productId, price, addToCart } = this.state.product;
     const addProduct = { productId, price };
-    this.props.addToCart(addProduct);
+    addToCart(addProduct);
   }
 
   render() {
-    const { formattedCurrency } = this.props;
+    const { formattedCurrency, cart, getCountById } = this.props;
+
     if (this.state.product) {
       const { productId, image, name, price, shortDescription, longDescription } = this.state.product;
       const { handleBackToCatalogClick, handleAddToCartClick } = this;
+      const currentAmount = getCountById(cart, productId);
+      // next line paragraph
       const longDescriptionChanged = longDescription.split('\\n.').map((item, i) => {
         return (<span key={i}>{`${item}.`}<br /><br /></span>);
       });
+
       return this.state.isLoading
         ? (
           <div className="row mt-5">
@@ -67,7 +71,7 @@ class ProductDetails extends Component {
               </div>
               <div className="row">
                 <div className="col-sm mx-2 my-2 text-center">
-                  <img className="img-fluid rounded mx-auto d-blockw-100 card-custom-not-hover detail-img-custom" src={image} alt={name} />
+                  <img className="img-fluid rounded mx-auto d-block w-100 card-custom-not-hover detail-img-custom" src={image} alt={name} />
                 </div>
                 <div className="col-sm mx-2 my-2">
                   <div className="row">
@@ -86,8 +90,23 @@ class ProductDetails extends Component {
                     </div>
                   </div>
                   <div className="row">
+                    <div className="col-sm">
+                      <p className="mx-2 my-2 text-info">
+                        {currentAmount > 1
+                          ? `You currently have ${currentAmount} items in you cart`
+                          : currentAmount === 1
+                            ? 'You currently have 1 item in you cart'
+                            : ''}</p>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-sm mx-2 my-2">
-                      <button className="btn btn-outline-dark" onClick={handleAddToCartClick}>Add To Cart</button>
+                      <button
+                        className="btn btn-outline-dark"
+                        onClick={handleAddToCartClick}>
+                        {currentAmount > 0
+                          ? 'Add More'
+                          : 'Add to Cart'}</button>
                     </div>
                   </div>
                 </div>

@@ -18,6 +18,20 @@ body {
   max-width: 90%;
   object-fit: cover;
   border: 0.5px solid black;
+  cursor: pointer;
+  box-shadow: 0.2px 0.2px 0.2px 0.2px #888888;
+}
+
+.list-img-custom:hover {
+  transform: scale(1.01);
+}
+
+.card-body-custom {
+  cursor: pointer;
+}
+
+.card-footer-custom > span {
+  font-size: 20px;
 }
 
 .detail-img-custom {
@@ -25,6 +39,7 @@ body {
   height: 100%;
   max-width: 90%;
   object-fit: cover;
+  border: 0.5px solid black;
 }
 
 .back-to-catalog {
@@ -53,12 +68,6 @@ body {
 
 .cart-icon-custom {
   cursor: pointer;
-}
-
-.cart-img-custom {
-  max-height: 225px;
-  width: 100%;
-  object-fit: cover;
 }
 
 .cart-img-custom {

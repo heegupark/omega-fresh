@@ -23,6 +23,7 @@ export default class App extends React.Component {
     this.formattedCurrency = this.formattedCurrency.bind(this);
     this.getTotal = this.getTotal.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
+    this.getCountById = this.getCountById.bind(this);
   }
 
   componentDidMount() {
@@ -109,8 +110,18 @@ export default class App extends React.Component {
     return total;
   }
 
+  getCountById(cart, id) {
+    let count = 0;
+    for (const key in cart) {
+      if (cart[key].productId === id) {
+        count++;
+      }
+    }
+    return count;
+  }
+
   render() {
-    const { setView, addToCart, placeOrder, formattedCurrency, getTotal } = this;
+    const { setView, addToCart, placeOrder, formattedCurrency, getTotal, getCountById } = this;
     const { name, params } = this.state.view;
     const { cart } = this.state;
     let element = null;
@@ -120,7 +131,10 @@ export default class App extends React.Component {
           <main>
             <ProductList
               setView={setView}
-              formattedCurrency={formattedCurrency} />
+              formattedCurrency={formattedCurrency}
+              cart={cart}
+              getCountById={getCountById}
+              addToCart={addToCart} />
           </main>);
         break;
       case 'details':
@@ -130,7 +144,9 @@ export default class App extends React.Component {
               addToCart={addToCart}
               productId={params.productId}
               setView={setView}
-              formattedCurrency={formattedCurrency} />
+              cart={cart}
+              formattedCurrency={formattedCurrency}
+              getCountById={getCountById} />
           </main>);
         break;
       case 'cart':
@@ -140,7 +156,8 @@ export default class App extends React.Component {
               setView={setView}
               cart={cart}
               getTotal={getTotal}
-              formattedCurrency={formattedCurrency} />
+              formattedCurrency={formattedCurrency}
+              addToCart={addToCart} />
           </main>);
         break;
       case 'checkout':
