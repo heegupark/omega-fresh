@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import OrderComplete from './order-complete';
 
 class CheckoutForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       creditCard: '',
@@ -10,7 +11,9 @@ class CheckoutForm extends Component {
       address2: '',
       state: 'AL',
       zipcode: '',
-      isCheckedOut: false
+      isCheckedOut: false,
+      cartGroupByItems: '',
+      total: this.props.total
     };
     this.handleBackToCatalogClick = this.handleBackToCatalogClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -83,7 +86,8 @@ class CheckoutForm extends Component {
       address2: '',
       state: '',
       zipcode: '',
-      isCheckedOut: true
+      isCheckedOut: true,
+      cartGroupByItems: this.props.cartGroupByItems
     });
   }
 
@@ -98,11 +102,11 @@ class CheckoutForm extends Component {
       handleZipcodeChange,
       handleSubmit
     } = this;
-    const { isCheckedOut } = this.state;
-    const { formattedCurrency, total } = this.props;
+    const { isCheckedOut, cartGroupByItems, total } = this.state;
+    const { formattedCurrency } = this.props;
     const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY', 'AE', 'AA', 'AP'];
     const formElement = (
-      <div>
+      <div className="fade-in">
         <div className="row">
           <div className="col-sm">
             <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
@@ -123,6 +127,7 @@ class CheckoutForm extends Component {
             <div className="form-group">
               <label htmlFor="name">name</label>
               <input
+                autoFocus
                 required
                 type="text"
                 className="form-control"
@@ -142,7 +147,7 @@ class CheckoutForm extends Component {
                 onChange={handleCreditCardChange}/>
             </div>
             <div className="form-group">
-              <label htmlFor="address-1">Address Line 1</label>
+              <label htmlFor="address-1">address Line 1</label>
               <input
                 required
                 type="text"
@@ -152,7 +157,7 @@ class CheckoutForm extends Component {
                 onChange={handleAddress1Change} />
             </div>
             <div className="form-group">
-              <label htmlFor="address-2">Address Line 2</label>
+              <label htmlFor="address-2">address Line 2</label>
               <input
                 type="text"
                 className="form-control"
@@ -161,7 +166,7 @@ class CheckoutForm extends Component {
                 onChange={handleAddress2Change} />
             </div>
             <div className="form-group address-custom">
-              <label htmlFor="state">State</label>
+              <label htmlFor="state">state</label>
               <select
                 required
                 className="form-control form-control-sm"
@@ -174,11 +179,11 @@ class CheckoutForm extends Component {
               </select>
             </div>
             <div className="form-group address-custom">
-              <label htmlFor="zipcode">Zipcode</label>
+              <label htmlFor="zipcode">zipcode</label>
               <input
                 required
                 maxLength="5"
-                type="number"
+                type="text"
                 className="form-control"
                 id="zipcode"
                 placeholder="zipcode"
@@ -187,26 +192,19 @@ class CheckoutForm extends Component {
             <button type="submit" className="btn btn-outline-secondary">Place Order</button>
           </form>
         </div>
-        <hr></hr>
-        <div className="row">
-          <div className="col-sm">
-            <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
-          </div>
-        </div>
       </div>
     );
     const submitElement = (
-      <div>
+      <div className="fade-in">
         <div className="row">
           <div className="col-sm">
             <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
           </div>
         </div>
-        <div className="row my-5">
-          <div className="col-sm text-center">
-            <p className="h2">Your order is successfully placed!</p>
-          </div>
-        </div>
+        <OrderComplete
+          total={total}
+          cartGroupByItems={cartGroupByItems}
+          formattedCurrency={formattedCurrency} />
       </div>
 
     );

@@ -62,6 +62,40 @@ app.get('/api/products/:productId', (req, res, next) => {
     });
 });
 
+app.get('/api/products/:pageNum/:itemsPerPage', (req, res, next) => {
+  const pageNum = parseInt(req.params.pageNum) || 1;
+  const itemsPerPage = parseInt(req.params.itemsPerPage) || 12;
+  if (!Number.isInteger(pageNum) || pageNum <= 0) {
+    return res.status(400).json({
+      error: '"pageNum" must be a positive integer'
+    });
+  }
+  if (!Number.isInteger(itemsPerPage) || itemsPerPage <= 0) {
+    return res.status(400).json({
+      error: '"itemsPerPage" must be a positive integer'
+    });
+  }
+  const sql = `
+    SELECT "productId", "name", "price", "image", "shortDescription",
+      (SELECT count("productId") FROM "products") AS "total"
+      FROM "products"
+    ORDER BY "productId" ASC
+    OFFSET $1
+     LIMIT $2
+  `;
+  const params = [(pageNum - 1) * itemsPerPage, itemsPerPage];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 app.get('/api/cart', (req, res, next) => {
   const sql = `
     SELECT "c"."cartItemId",
@@ -179,6 +213,42 @@ app.post('/api/order', (req, res, next) => {
   db.query(sql, values)
     .then(result => {
       req.session.destroy();
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+app.delete('/api/cart', (req, res, next) => {
+  const { cartId } = req.session;
+  const { productId } = req.body;
+  if (!cartId) {
+    return next(new ClientError('"cartId" is not existed. Cart is empty.', 400));
+  }
+  if (!productId) {
+    return next(new ClientError('"productId" is required.', 400));
+  }
+
+  const sql = `
+    DELETE FROM "cartItems"
+      WHERE "cartItemId"
+        IN (
+          SELECT "cartItemId"
+          FROM "cartItems"
+          WHERE "cartId" = $1
+          AND "productId"= $2
+          ORDER BY "cartItemId" ASC
+          LIMIT 1)
+      RETURNING *
+  `;
+  const values = [cartId, productId];
+
+  db.query(sql, values)
+    .then(result => {
       res.status(201).json(result.rows[0]);
     })
     .catch(err => {
