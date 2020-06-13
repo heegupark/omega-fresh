@@ -44,7 +44,7 @@ class CartSummary extends Component {
   }
 
   render() {
-    const { cart, formattedCurrency, getTotal, addToCart } = this.props;
+    const { cart, formattedCurrency, getTotal, addToCart, removeFromCart } = this.props;
     const { handleBackToCatalogClick, groupByItems, handleCheckoutClick } = this;
 
     // Group by item
@@ -83,7 +83,8 @@ class CartSummary extends Component {
                       shortDescription={shortDescription}
                       amount={amount}
                       formattedCurrency={formattedCurrency}
-                      addToCart={addToCart} />;
+                      addToCart={addToCart}
+                      removeFromCart={removeFromCart} />;
                   })
                 }
               </div>

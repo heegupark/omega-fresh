@@ -15,11 +15,13 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      cartItemCount: 0
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
     this.formattedCurrency = this.formattedCurrency.bind(this);
     this.getTotal = this.getTotal.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
@@ -73,6 +75,26 @@ export default class App extends React.Component {
       .catch(err => console.error(err.message));
   }
 
+  removeFromCart(product) {
+    const array = [...this.state.cart];
+    fetch('/api/cart', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    })
+      .then(res => res.json())
+      .then(data => {
+        const index = array.findIndex(i => data.cartItemId === i.cartItemId);
+        array.splice(index, 1);
+        this.setState({
+          cart: array
+        });
+      })
+      .catch(err => console.error(err.message));
+  }
+
   placeOrder(newOrder) {
     const order = {
       name: newOrder.name,
@@ -121,7 +143,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { setView, addToCart, placeOrder, formattedCurrency, getTotal, getCountById } = this;
+    const {
+      setView,
+      addToCart,
+      removeFromCart,
+      placeOrder,
+      formattedCurrency,
+      getTotal,
+      getCountById
+    } = this;
     const { name, params } = this.state.view;
     const { cart } = this.state;
     let element = null;
@@ -134,7 +164,8 @@ export default class App extends React.Component {
               formattedCurrency={formattedCurrency}
               cart={cart}
               getCountById={getCountById}
-              addToCart={addToCart} />
+              addToCart={addToCart}
+              removeFromCart={removeFromCart} />
           </main>);
         break;
       case 'details':
@@ -157,7 +188,8 @@ export default class App extends React.Component {
               cart={cart}
               getTotal={getTotal}
               formattedCurrency={formattedCurrency}
-              addToCart={addToCart} />
+              addToCart={addToCart}
+              removeFromCart={removeFromCart} />
           </main>);
         break;
       case 'checkout':

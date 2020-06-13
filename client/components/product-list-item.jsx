@@ -5,6 +5,7 @@ class ProductListItem extends Component {
     super(props);
     this.handleProductClick = this.handleProductClick.bind(this);
     this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
+    this.handleRemoveFromCartClick = this.handleRemoveFromCartClick.bind(this);
   }
 
   handleProductClick() {
@@ -17,9 +18,15 @@ class ProductListItem extends Component {
     addToCart(addProduct);
   }
 
+  handleRemoveFromCartClick() {
+    const { productId, removeFromCart } = this.props;
+    const removeProduct = { productId };
+    removeFromCart(removeProduct);
+  }
+
   render() {
     const { productId, name, price, image, shortDescription, formattedCurrency, amount } = this.props;
-    const { handleProductClick, handleAddToCartClick } = this;
+    const { handleProductClick, handleAddToCartClick, handleRemoveFromCartClick } = this;
     return (
       <div className="col-md-4 card-deck my-2">
         <div className="card" id={productId}>
@@ -38,7 +45,7 @@ class ProductListItem extends Component {
             amount > 0
               ? (
                 <div className="text-center card-footer-custom mb-3">
-                  <button className="btn btn-outline-secondary"><i className="fas fa-minus"></i></button>
+                  <button className="btn btn-outline-secondary" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
                   <span className="mx-5">{amount}</span>
                   <button className="btn btn-outline-dark" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
                 </div>

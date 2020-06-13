@@ -27,7 +27,7 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.state;
-    const { setView, formattedCurrency, getCountById, cart, addToCart } = this.props;
+    const { setView, formattedCurrency, getCountById, cart, addToCart, removeFromCart } = this.props;
     return (
       <div className="row justify-content-center">
         {
@@ -44,7 +44,8 @@ class ProductList extends Component {
               setView={setView}
               formattedCurrency={formattedCurrency}
               addToCart={addToCart}
-              amount={amount} />;
+              amount={amount}
+              removeFromCart={removeFromCart} />;
           })
         }
       </div>

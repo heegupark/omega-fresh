@@ -189,6 +189,42 @@ app.post('/api/order', (req, res, next) => {
     });
 });
 
+app.delete('/api/cart', (req, res, next) => {
+  const { cartId } = req.session;
+  const { productId } = req.body;
+  if (!cartId) {
+    return next(new ClientError('"cartId" is not existed. Cart is empty.', 400));
+  }
+  if (!productId) {
+    return next(new ClientError('"productId" is required.', 400));
+  }
+
+  const sql = `
+    DELETE FROM "cartItems"
+      WHERE "cartItemId"
+        IN (
+          SELECT "cartItemId"
+          FROM "cartItems"
+          WHERE "cartId" = $1
+          AND "productId"= $2
+          ORDER BY "cartItemId" ASC
+          LIMIT 1)
+      RETURNING *
+  `;
+  const values = [cartId, productId];
+
+  db.query(sql, values)
+    .then(result => {
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 app.get('/api/health-check', (req, res, next) => {
   db.query('select \'successfully connected\' as "message"')
     .then(result => res.json(result.rows[0]))

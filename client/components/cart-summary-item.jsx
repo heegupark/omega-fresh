@@ -4,6 +4,7 @@ class CartSummaryItem extends Component {
   constructor() {
     super();
     this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
+    this.handleRemoveFromCartClick = this.handleRemoveFromCartClick.bind(this);
   }
 
   handleAddToCartClick() {
@@ -12,8 +13,14 @@ class CartSummaryItem extends Component {
     addToCart(addProduct);
   }
 
+  handleRemoveFromCartClick() {
+    const { productId, removeFromCart } = this.props;
+    const removeProduct = { productId };
+    removeFromCart(removeProduct);
+  }
+
   render() {
-    const { handleAddToCartClick } = this;
+    const { handleAddToCartClick, handleRemoveFromCartClick } = this;
     const { name, price, image, shortDescription, amount, formattedCurrency } = this.props;
     return (
       <div className="row justify-content-center  card-deck card my-2 w-100">
@@ -26,7 +33,7 @@ class CartSummaryItem extends Component {
           <p className="h6">{shortDescription}</p>
           <div className="text-center mt-5 card-footer-custom ">
             <hr></hr>
-            <button className="btn btn-outline-secondary"><i className="fas fa-minus"></i></button>
+            <button className="btn btn-outline-secondary" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
             <span className="mx-5">{amount}</span>
             <button className="btn btn-outline-dark" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
           </div>
