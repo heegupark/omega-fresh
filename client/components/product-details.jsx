@@ -40,10 +40,7 @@ class ProductDetails extends Component {
   }
 
   render() {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    });
+    const { formattedCurrency } = this.props;
     if (this.state.product) {
       const { productId, image, name, price, shortDescription, longDescription } = this.state.product;
       const { handleBackToCatalogClick, handleAddToCartClick } = this;
@@ -80,7 +77,7 @@ class ProductDetails extends Component {
                   </div>
                   <div className="row">
                     <div className="col-sm mx-2 my-2">
-                      <h4 className="text-secondary">{formatter.format(price / 100)}</h4>
+                      <h4 className="text-secondary">{formattedCurrency(price)}</h4>
                     </div>
                   </div>
                   <div className="row">

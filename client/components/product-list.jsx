@@ -27,7 +27,7 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.state;
-    const { setView } = this.props;
+    const { setView, formattedCurrency } = this.props;
     return (
       <div className="row justify-content-center">
         {
@@ -40,7 +40,8 @@ class ProductList extends Component {
               price={price}
               image={image}
               shortDescription={shortDescription}
-              setView={setView} />;
+              setView={setView}
+              formattedCurrency={formattedCurrency} />;
           })
         }
       </div>
