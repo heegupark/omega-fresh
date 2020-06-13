@@ -67,6 +67,14 @@ body {
   object-fit: cover;
 }
 
+.cart-summary-custom {
+  min-height: 70vh;
+}
+
+.address-custom {
+  width: 100px;
+}
+
 @media (max-width: 1199.98px) {
   .container-custom > main {
     width: 90%;

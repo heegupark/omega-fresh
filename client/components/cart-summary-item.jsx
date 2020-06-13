@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 
 class CartSummaryItem extends Component {
   render() {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    });
+    const { formattedCurrency } = this.props;
 
     const { name, price, image, shortDescription, amount } = this.props;
     return (
@@ -15,7 +12,7 @@ class CartSummaryItem extends Component {
         </div>
         <div className="col-sm my-2">
           <p className="h2">{name}</p>
-          <p className="h4 text-secondary">{formatter.format(price / 100)}</p>
+          <p className="h4 text-secondary">{formattedCurrency(price)}</p>
           <p className="h6">{shortDescription}</p>
           <p className="h5">Amount: <span>{amount}</span></p>
         </div>
