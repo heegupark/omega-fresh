@@ -62,6 +62,40 @@ app.get('/api/products/:productId', (req, res, next) => {
     });
 });
 
+app.get('/api/products/:pageNum/:itemsPerPage', (req, res, next) => {
+  const pageNum = parseInt(req.params.pageNum) || 1;
+  const itemsPerPage = parseInt(req.params.itemsPerPage) || 12;
+  if (!Number.isInteger(pageNum) || pageNum <= 0) {
+    return res.status(400).json({
+      error: '"pageNum" must be a positive integer'
+    });
+  }
+  if (!Number.isInteger(itemsPerPage) || itemsPerPage <= 0) {
+    return res.status(400).json({
+      error: '"itemsPerPage" must be a positive integer'
+    });
+  }
+  const sql = `
+    SELECT "productId", "name", "price", "image", "shortDescription",
+      (SELECT count("productId") FROM "products") AS "total"
+      FROM "products"
+    ORDER BY "productId" ASC
+    OFFSET $1
+     LIMIT $2
+  `;
+  const params = [(pageNum - 1) * itemsPerPage, itemsPerPage];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 app.get('/api/cart', (req, res, next) => {
   const sql = `
     SELECT "c"."cartItemId",

@@ -44,19 +44,18 @@ class ProductListItem extends Component {
           {
             amount > 0
               ? (
-                <div className="text-center card-footer-custom mb-3">
-                  <button className="btn btn-outline-secondary" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
+                <div className="text-center card-footer-custom mb-2">
+                  <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
                   <span className="mx-5">{amount}</span>
-                  <button className="btn btn-outline-dark" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
+                  <button autoFocus className="btn btn-outline-dark btn-sm fade-in" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
                 </div>
               )
               : (
-                <div className="text-center card-footer-custom mb-3">
-                  <button className="mx-3 btn btn-outline-dark" onClick={handleAddToCartClick}>Add to Cart</button>
+                <div className="text-center card-footer-custom mb-2">
+                  <button className="mx-3 btn btn-outline-dark btn-sm fade-in" onClick={handleAddToCartClick}>Add to Cart</button>
                 </div>
               )
           }
-
         </div>
       </div>
     );

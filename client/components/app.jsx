@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './header';
+import Footer from './footer';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
@@ -26,6 +27,7 @@ export default class App extends React.Component {
     this.getTotal = this.getTotal.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.getCountById = this.getCountById.bind(this);
+    this.groupByItems = this.groupByItems.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +36,6 @@ export default class App extends React.Component {
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
-
     this.getCartItems();
   }
 
@@ -142,6 +143,32 @@ export default class App extends React.Component {
     return count;
   }
 
+  groupByItems(cart) {
+    const array = [];
+    const cartArr = cart.reduce((result, item) => {
+      if (!result[item.productId]) { result[item.productId] = 0; }
+      result[item.productId]++;
+      return result;
+    }, {});
+
+    for (const key in cartArr) {
+      for (const i in cart) {
+        if (Number(key) === cart[i].productId) {
+          array.push({
+            productId: cart[i].productId,
+            name: cart[i].name,
+            price: cart[i].price,
+            image: cart[i].image,
+            shortDescription: cart[i].shortDescription,
+            amount: cartArr[key]
+          });
+          break;
+        }
+      }
+    }
+    return array;
+  }
+
   render() {
     const {
       setView,
@@ -150,7 +177,8 @@ export default class App extends React.Component {
       placeOrder,
       formattedCurrency,
       getTotal,
-      getCountById
+      getCountById,
+      groupByItems
     } = this;
     const { name, params } = this.state.view;
     const { cart } = this.state;
@@ -186,10 +214,11 @@ export default class App extends React.Component {
             <CartSummary
               setView={setView}
               cart={cart}
-              getTotal={getTotal}
+              total={getTotal(cart)}
               formattedCurrency={formattedCurrency}
               addToCart={addToCart}
-              removeFromCart={removeFromCart} />
+              removeFromCart={removeFromCart}
+              cartGroupByItems={groupByItems(cart)} />
           </main>);
         break;
       case 'checkout':
@@ -199,7 +228,8 @@ export default class App extends React.Component {
               setView={setView}
               total={getTotal(cart)}
               formattedCurrency={formattedCurrency}
-              onSubmit={placeOrder} />
+              onSubmit={placeOrder}
+              cartGroupByItems={groupByItems(cart)} />
           </main>);
         break;
     }
@@ -210,17 +240,19 @@ export default class App extends React.Component {
           <Header cartItemCount={cartItemCount} />
           <div className="row mt-5">
             <div className="col-sm text-center">
-              <h1 className="mb-5">Testing connections...</h1>
+              <h1 className="mb-5">loading items...</h1>
               <div className="spinner-border text-primary mt-5" role="status">
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       )
       : (
         <div className="container-fluid container-custom">
           <Header cartItemCount={cartItemCount} setView={setView}/>
           {element}
+          <Footer />
         </div>
       );
   }

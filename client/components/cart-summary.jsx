@@ -5,7 +5,6 @@ class CartSummary extends Component {
   constructor() {
     super();
     this.handleBackToCatalogClick = this.handleBackToCatalogClick.bind(this);
-    this.groupByItems = this.groupByItems.bind(this);
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
   }
 
@@ -13,47 +12,19 @@ class CartSummary extends Component {
     this.props.setView('catalog', {});
   }
 
-  groupByItems(cart) {
-    const array = [];
-    const cartArr = cart.reduce((result, item) => {
-      if (!result[item.productId]) { result[item.productId] = 0; }
-      result[item.productId]++;
-      return result;
-    }, {});
-
-    for (const key in cartArr) {
-      for (const i in cart) {
-        if (Number(key) === cart[i].productId) {
-          array.push({
-            productId: cart[i].productId,
-            name: cart[i].name,
-            price: cart[i].price,
-            image: cart[i].image,
-            shortDescription: cart[i].shortDescription,
-            amount: cartArr[key]
-          });
-          break;
-        }
-      }
-    }
-    return array;
-  }
-
   handleCheckoutClick() {
     this.props.setView('checkout', {});
   }
 
   render() {
-    const { cart, formattedCurrency, getTotal, addToCart, removeFromCart } = this.props;
-    const { handleBackToCatalogClick, groupByItems, handleCheckoutClick } = this;
+    const { formattedCurrency, total, addToCart, removeFromCart, cartGroupByItems } = this.props;
+    const { handleBackToCatalogClick, handleCheckoutClick } = this;
 
     // Group by item
-    const array = groupByItems(cart);
+    const array = cartGroupByItems;
 
-    // Total
-    const total = getTotal(cart);
     return (
-      <div>
+      <div className="fade-in">
         <div className="row">
           <div className="col-sm">
             <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
@@ -64,13 +35,13 @@ class CartSummary extends Component {
             <span className="text-dark h2" >My Cart</span>
           </div>
           <div className="col-sm text-right">
-            <span className="h4 text-secondary">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
+            <span className="h4 text-secondary mr-2">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
           </div>
         </div>
-        <div className="row justify-content-center cart-summary-custom">
+        <div className="row cart-summary-custom">
           { total > 0
             ? (
-              <div className="col-sm">
+              <div className="col-sm align-items-center">
                 {
                   array.map((item, index) => {
                     const { productId, name, price, image, shortDescription, amount } = item;

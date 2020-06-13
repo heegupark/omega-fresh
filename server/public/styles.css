@@ -3,8 +3,21 @@ body {
   font-size: 14px;
 }
 
+main {
+  min-height: 85vh;
+}
+
 .shop-title-custom {
   margin-left: 25%;
+}
+
+.logo-img {
+  width: 30px;
+}
+
+.logo-text {
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .container-custom > main {
@@ -30,8 +43,16 @@ body {
   cursor: pointer;
 }
 
+.card-footer-custom {
+  margin-top: -10px;
+}
+
 .card-footer-custom > span {
   font-size: 20px;
+}
+
+.card-footer-custom-cart {
+  margin-top: 70px;
 }
 
 .detail-img-custom {
@@ -42,8 +63,16 @@ body {
   border: 0.5px solid black;
 }
 
+.load-more {
+  cursor: pointer;
+}
+
 .back-to-catalog {
   cursor: pointer;
+}
+
+.amount-custom {
+  font-size: 20px;
 }
 
 .card-custom-not-hover {
@@ -84,13 +113,70 @@ body {
   width: 100px;
 }
 
+.order-complete-item {
+  width: 400px;
+}
+
+.order-complete-item-img{
+  width: 200px;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.size-up-down-odd {
+  animation: sizeUpDownOdd 0.1s ease-in;
+}
+
+.size-up-down-even {
+  animation: sizeUpDownEven 0.1s ease-in;
+}
+
+@keyframes sizeUpDownOdd {
+  0%   {transform: scale(1); }
+  50%  {transform: scale(1.2);}
+  100% {transform: scale(1);}
+}
+
+@keyframes sizeUpDownEven {
+  0%   {transform: scale(1);}
+  50%  {transform: scale(1.2);}
+  100% {transform: scale(1);}
+}
+
 @media (max-width: 1199.98px) {
+  .shop-title-custom {
+    margin-left: 10%;
+  }
+
+  .cart-custom {
+    margin-right: 5%;
+  }
+
   .container-custom > main {
     width: 90%;
   }
 }
 
 @media (max-width: 991.98px) {
+  .shop-title-custom {
+    margin-left: 5%;
+  }
+
+  .cart-custom {
+    margin-right: 5%;
+  }
+
   .container-custom > main {
     width: 95%;
   }
