@@ -28,8 +28,8 @@ class CartSummaryItem extends Component {
           <img className="img-fluid rounded mx-auto d-block card-custom-not-hover cart-img-custom" src={image} alt={name} />
         </div>
         <div className="col-sm my-2">
-          <p className="h2">{name}</p>
-          <p className="h4 text-secondary">{formattedCurrency(price)}</p>
+          <p className="h4">{name}</p>
+          <p className="h5 text-secondary">{formattedCurrency(price)}</p>
           <p className="h6">{shortDescription}</p>
           <div className="text-center card-footer-custom-cart">
             <hr></hr>

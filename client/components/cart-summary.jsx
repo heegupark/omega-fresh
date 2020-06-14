@@ -32,13 +32,13 @@ class CartSummary extends Component {
         </div>
         <div className="row my-2">
           <div className="col-sm">
-            <span className="text-dark h2" >My Cart</span>
+            <span className="h3 text-dark ml-3" >My Cart</span>
           </div>
           <div className="col-sm text-right">
-            <span className="h4 text-secondary mr-2">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
+            <span className="h4 text-secondary mr-3">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
           </div>
         </div>
-        <div className="row cart-summary-custom">
+        <div className="row cart-summary-custom mx-auto">
           { total > 0
             ? (
               <div className="col-sm align-items-center">
@@ -71,12 +71,12 @@ class CartSummary extends Component {
         </div>
         <hr></hr>
         <div className="row my-2">
-          <div className="col text-left">
-            <span className="h4 text-secondary">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
+          <div className="col text-left ml-3 my-auto">
+            <span className="h5 text-secondary">{total > 0 ? `Total: ${formattedCurrency(total)}` : ''}</span>
           </div>
-          <div className="col text-right">
+          <div className="col text-right mr-3">
             { total > 0
-              ? (<button className="btn btn-outline-secondary" onClick={handleCheckoutClick}>Check Out</button>)
+              ? (<button className="btn btn-sm btn-outline-secondary" onClick={handleCheckoutClick}>Check Out</button>)
               : ''
             }
           </div>

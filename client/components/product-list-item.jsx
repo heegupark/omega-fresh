@@ -3,9 +3,14 @@ import React, { Component } from 'react';
 class ProductListItem extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      width: innerHeight,
+      height: innerHeight
+    };
     this.handleProductClick = this.handleProductClick.bind(this);
     this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
     this.handleRemoveFromCartClick = this.handleRemoveFromCartClick.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   handleProductClick() {
@@ -24,19 +29,39 @@ class ProductListItem extends Component {
     removeFromCart(removeProduct);
   }
 
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
   render() {
     const { productId, name, price, image, shortDescription, formattedCurrency, amount } = this.props;
     const { handleProductClick, handleAddToCartClick, handleRemoveFromCartClick } = this;
+    const { width } = this.state;
+    let cardClass = 'col-md-4';
+    let leftMg = 'ml-1';
+    if (width <= 767) {
+      cardClass = 'col-sm-6';
+      leftMg = 'ml-1';
+    }
     return (
-      <div className="col-md-4 card-deck my-2">
+      <div className={`${cardClass} card-deck my-2`}>
         <div className="card" id={productId}>
           <img
             className="card-img-top img-fluid rounded my-2 mx-auto d-block list-img-custom"
             src={image}
             alt={name}
             onClick={handleProductClick} />
-          <div className="card-body card-body-custom" onClick={handleProductClick}>
-            <h5 className="card-title">{name}</h5>
+          <div className={`card-body card-body-custom ${leftMg}`} onClick={handleProductClick}>
+            <p className="h5 card-title">{name}</p>
             <p className="card-subtitle">{formattedCurrency(price)}</p>
             <p className="card-text">{shortDescription}</p>
           </div>

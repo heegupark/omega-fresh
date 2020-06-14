@@ -1,10 +1,12 @@
 require('dotenv/config');
 const express = require('express');
-
 const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
+
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 app.use(express.json());
@@ -284,3 +286,14 @@ app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port', process.env.PORT);
 });
+
+if (process.env.ENV === 'LIVE') {
+  https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/city.heegu.net/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/city.heegu.net/fullchain.pem')
+  },
+  app).listen(process.env.PORT, () => {
+  // eslint-disable-next-line no-console
+    console.log(`[https] JSON Server listening on port ${process.env.PORT}`);
+  });
+}

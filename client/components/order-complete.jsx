@@ -7,15 +7,15 @@ class OrderComplete extends Component {
 
     return (
       <div>
-        <div className="row my-5">
+        <div className="row my-3">
           <div className="col-sm text-center">
-            <p className="h2">Your order is successfully placed!</p>
+            <p className="h4">Your order is successfully placed!</p>
           </div>
         </div>
         <div className="row mb-2">
           <div className="col-sm text-center">
-            <span className="h3 text-secondary">{'[Order Summary]'}</span>
-            <span className="h3">{` Total: ${formattedCurrency(total)}`}</span>
+            <span className="h5 text-secondary">{'[Order Summary]'}</span>
+            <span className="h5">{` Total: ${formattedCurrency(total)}`}</span>
           </div>
         </div>
         <div className="row col-md-6 cart-summary-custom mx-auto">

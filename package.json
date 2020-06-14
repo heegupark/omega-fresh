@@ -1,5 +1,5 @@
 {
-  "name": "wicked-sales-js-solution",
+  "name": "omega-fresh-react-app",
   "version": "1.0.0",
   "description": "Reference implemenation of a Node.js &amp; React shopping cart app.",
   "main": "server/index.js",
