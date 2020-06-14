@@ -60,6 +60,7 @@ class ProductDetails extends Component {
   render() {
     const { formattedCurrency, cart, getCountById } = this.props;
     const { amount } = this.state;
+
     if (this.state.product) {
       const { productId, image, name, price, shortDescription, longDescription } = this.state.product;
       const { handleBackToCatalogClick, handleAddToCartClick, handlePlusBtnClick, handleMinusBtnClick } = this;
@@ -68,7 +69,6 @@ class ProductDetails extends Component {
       const longDescriptionChanged = longDescription.split('\\n.').map((item, i) => {
         return (<span key={i}>{`${item}.`}<br /><br /></span>);
       });
-
       return this.state.isLoading
         ? (
           <div className="fade-in row mt-5">
@@ -118,30 +118,25 @@ class ProductDetails extends Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-sm mx-2 my-2">
-                      <div className="row">
-                        <div className="input-group mb-1 col-sm-4 mx-2">
-                          <div className="input-group-prepend">
-                            <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleMinusBtnClick}><i className="fas fa-minus"></i></button>
-                          </div>
-                          <input
-                            disabled
-                            className="form-control text-center amount-custom"
-                            placeholder={amount}></input>
-                          <div className="input-group-append">
-                            <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handlePlusBtnClick}><i className="fas fa-plus"></i></button>
-                          </div>
-                        </div>
-                        <div className="colsm-4 mx-2">
-                          <button
-                            className="btn btn-outline-dark"
-                            onClick={handleAddToCartClick}>
-                            {currentAmount > 0
-                              ? 'Add More'
-                              : 'Add to Cart'}</button>
-                        </div>
-
+                    <div className="input-group col-sm my-auto">
+                      <div className="input-group-prepend">
+                        <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleMinusBtnClick}><i className="fas fa-minus"></i></button>
                       </div>
+                      <input
+                        disabled
+                        className="form-control text-center bg-light amount-custom"
+                        placeholder={amount}></input>
+                      <div className="input-group-append">
+                        <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handlePlusBtnClick}><i className="fas fa-plus"></i></button>
+                      </div>
+                    </div>
+                    <div className="col-sm my-1">
+                      <button
+                        className="btn btn-outline-dark w-100"
+                        onClick={handleAddToCartClick}>
+                        {currentAmount > 0
+                          ? 'Add More'
+                          : 'Add to Cart'}</button>
                     </div>
                   </div>
                 </div>

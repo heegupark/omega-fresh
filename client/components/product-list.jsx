@@ -37,10 +37,6 @@ class ProductList extends Component {
   handleLoadMoreBtnClick() {
     this.getProducts(this.state.page + 1, 6);
     this.loadMore();
-    window.scrollTo({
-      top: 760 * this.state.page,
-      behavior: 'smooth'
-    });
   }
 
   handleBackToTopBtnClick() {
@@ -97,10 +93,6 @@ class ProductList extends Component {
             <div className="load-more my-2" onClick={handleBackToTopBtnClick}>back to top</div>
           </div>
         </div>
-        { total > page * 6
-          ? <div style={{ height: window.innerHeight }}></div>
-          : ''
-        }
       </div>
     );
   }

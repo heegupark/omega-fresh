@@ -35,8 +35,10 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
-      .finally(() => this.setState({ isLoading: false }));
-    this.getCartItems();
+      .finally(() => {
+        this.setState({ isLoading: false });
+        this.getCartItems();
+      });
   }
 
   setView(string, object) {
@@ -237,14 +239,16 @@ export default class App extends React.Component {
     return this.state.isLoading
       ? (
         <div>
-          <Header cartItemCount={cartItemCount} />
-          <div className="row mt-5">
-            <div className="col-sm text-center">
-              <h1 className="mb-5">loading items...</h1>
-              <div className="spinner-border text-primary mt-5" role="status">
+          <Header cartItemCount={cartItemCount} setView={setView} />
+          <main>
+            <div className="row mt-5">
+              <div className="col-sm text-center">
+                <h1 className="mb-5">loading items...</h1>
+                <div className="spinner-border text-primary mt-5" role="status">
+                </div>
               </div>
             </div>
-          </div>
+          </main>
           <Footer />
         </div>
       )

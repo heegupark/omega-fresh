@@ -114,12 +114,12 @@ class CheckoutForm extends Component {
         </div>
         <div className="row my-2">
           <div className="col-sm">
-            <span className="text-dark h2" >My Cart</span>
+            <span className="h4 text-dark checkout-title" >Check Out</span>
           </div>
         </div>
         <div className="row my-2">
           <div className="col-sm text-left">
-            <span className="h3 text-secondary">Order Total: {formattedCurrency(total)}</span>
+            <span className="h4 text-secondary checkout-title">Order Total: {formattedCurrency(total)}</span>
           </div>
         </div>
         <div className="row justify-content-center">
