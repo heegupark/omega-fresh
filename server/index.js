@@ -15,7 +15,7 @@ app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
 app.use(express.json());
-app.user(cors());
+app.use(cors());
 
 app.get('/api/products', (req, res, next) => {
   const sql = `
