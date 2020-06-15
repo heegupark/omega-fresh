@@ -16,12 +16,7 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const { productId } = this.props;
-    fetch(`https://fresh.heegu.net:3041/api/products/${productId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    fetch(`/api/products/${productId}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -80,36 +75,36 @@ class ProductDetails extends Component {
           </div>
         )
         : (
-          <div className="fade-in row justify-content-center" id={productId}>
+          <div className="fade-in" id={productId}>
             <div className="col-sm card pt-3 card-custom-not-hover">
               <div className="row">
                 <div className="col-sm">
                   <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Back to Catalog'}</span>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm mx-2 my-2 text-center">
+              <div className="row my-1">
+                <div className="col-sm text-center">
                   <img className="img-fluid rounded mx-auto d-block w-100 card-custom-not-hover detail-img-custom" src={image} alt={name} />
                 </div>
-                <div className="col-sm mx-2 my-2">
-                  <div className="row">
-                    <div className="col-sm mx-2 my-2">
-                      <h2>{name}</h2>
+                <div className="col-sm mx-1 my-1">
+                  <div className="row my-1">
+                    <div className="col-sm mx-2">
+                      <h4>{name}</h4>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm mx-2 my-2">
-                      <h4 className="text-secondary">{formattedCurrency(price)}</h4>
+                  <div className="row my-1">
+                    <div className="col-sm mx-2">
+                      <h5 className="text-secondary">{formattedCurrency(price)}</h5>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm mx-2 my-2">
+                  <div className="row my-1">
+                    <div className="col-sm mx-2">
                       <p>{shortDescription}</p>
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row my-1">
                     <div className="col-sm">
-                      <p className="mx-2 my-2 text-info">
+                      <p className="mx-2 text-info">
                         {currentAmount > 1
                           ? `You currently have ${currentAmount} items in you cart`
                           : currentAmount === 1
@@ -117,22 +112,18 @@ class ProductDetails extends Component {
                             : ''}</p>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="input-group col-sm my-auto">
-                      <div className="input-group-prepend">
-                        <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleMinusBtnClick}><i className="fas fa-minus"></i></button>
-                      </div>
-                      <input
-                        disabled
-                        className="form-control text-center bg-light amount-custom"
-                        placeholder={amount}></input>
-                      <div className="input-group-append">
-                        <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handlePlusBtnClick}><i className="fas fa-plus"></i></button>
-                      </div>
+                  <hr></hr>
+                  <div className="row my-1">
+                    <div className="col my-auto text-center">
+                      <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleMinusBtnClick}><i className="fas fa-minus"></i></button>
+                      <span
+                        className="text-center bg-light amount-custom mx-3">
+                        {amount}</span>
+                      <button autoFocus className="btn btn-outline-secondary btn-sm fade-in" onClick={handlePlusBtnClick}><i className="fas fa-plus"></i></button>
                     </div>
-                    <div className="col-sm my-1">
+                    <div className="col text-center my-1">
                       <button
-                        className="btn btn-outline-dark w-100"
+                        className="btn btn-outline-dark"
                         onClick={handleAddToCartClick}>
                         {currentAmount > 0
                           ? 'Add More'

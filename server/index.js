@@ -152,7 +152,6 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       req.session.cartId = result.cartId;
-      req.session.save();
       const sqlForCreateCartItem = `
           INSERT INTO "cartItems" ("cartId", "productId", "price")
           VALUES ($1, $2, $3)
@@ -166,7 +165,6 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       req.session.cartItemId = result.cartItemId;
-      req.session.save();
       const sqlForRetriveData = `
              SELECT "c"."cartItemId",
                     "c"."price",
