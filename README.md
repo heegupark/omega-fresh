@@ -44,12 +44,12 @@
 ## Screen shot
 [Desktop - Chrome browser]
 
-![Omega Flash Cards](https://github.com/heegupark/omega-flash-cards/blob/master/ofc-ss-001.gif)
+![Omega Fresh](https://github.com/heegupark/omega-freshs/blob/master/fresh-ss-001.gif)
 
 [iPhone 6/7/8 - Portrait]
 
-![Omega Flash Cards](https://github.com/heegupark/omega-flash-cards/blob/master/ofc-ss-002.gif)
+![Omega Fresh](https://github.com/heegupark/omega-fresh/blob/master/fresh-ss-002.gif)
 
 [iPhone 6/7/8 - Landscape]
 
-![Omega Flash Cards](https://github.com/heegupark/omega-flash-cards/blob/master/ofc-ss-003.gif)
+![Omega Fresh](https://github.com/heegupark/omega-fresh/blob/master/fresh-ss-003.gif)
