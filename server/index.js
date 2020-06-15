@@ -282,12 +282,12 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log('Listening on port', process.env.PORT);
-});
-
-if (process.env.ENV === 'LIVE') {
+if (process.env.ENV === 'DEV') {
+  app.listen(process.env.PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log('Listening on port', process.env.PORT);
+  });
+} else if (process.env.ENV === 'LIVE') {
   https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/city.heegu.net/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/city.heegu.net/fullchain.pem')
