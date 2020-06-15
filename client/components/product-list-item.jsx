@@ -4,8 +4,8 @@ class ProductListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: innerHeight,
-      height: innerHeight
+      width: window.innerWidth,
+      height: window.innerHeight
     };
     this.handleProductClick = this.handleProductClick.bind(this);
     this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
@@ -29,13 +29,13 @@ class ProductListItem extends Component {
     removeFromCart(removeProduct);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener('resize', this.updateDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
   }
 
   updateDimensions() {
@@ -44,14 +44,14 @@ class ProductListItem extends Component {
 
   render() {
     const { productId, name, price, image, shortDescription, formattedCurrency, amount } = this.props;
-    const { handleProductClick, handleAddToCartClick, handleRemoveFromCartClick } = this;
     const { width } = this.state;
+    const { handleProductClick, handleAddToCartClick, handleRemoveFromCartClick } = this;
+
     let cardClass = 'col-md-4';
-    let leftMg = 'ml-1';
-    if (width <= 767) {
+    if (width <= 900) {
       cardClass = 'col-sm-6';
-      leftMg = 'ml-1';
     }
+
     return (
       <div className={`${cardClass} card-deck my-2`}>
         <div className="card" id={productId}>
@@ -60,8 +60,8 @@ class ProductListItem extends Component {
             src={image}
             alt={name}
             onClick={handleProductClick} />
-          <div className={`card-body card-body-custom ${leftMg}`} onClick={handleProductClick}>
-            <p className="h5 card-title">{name}</p>
+          <div className="card-body card-body-custom" onClick={handleProductClick}>
+            <h5 className="card-title">{name}</h5>
             <p className="card-subtitle">{formattedCurrency(price)}</p>
             <p className="card-text">{shortDescription}</p>
           </div>

@@ -31,7 +31,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://fresh.heegu.net:3041/api/health-check')
+    fetch('/api/health-check')
       .then(res => res.json())
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
@@ -51,7 +51,7 @@ export default class App extends React.Component {
   }
 
   getCartItems() {
-    fetch('https://fresh.heegu.net:3041/api/cart')
+    fetch('/api/cart')
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -62,7 +62,7 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
-    fetch('https://fresh.heegu.net:3041/api/cart', {
+    fetch('/api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export default class App extends React.Component {
 
   removeFromCart(product) {
     const array = [...this.state.cart];
-    fetch('https://fresh.heegu.net:3041/api/cart', {
+    fetch('/api/cart', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ export default class App extends React.Component {
       creditCard: newOrder.creditCard,
       shippingAddress: `${newOrder.address1},${newOrder.address2},${newOrder.state},${newOrder.zipcode}`
     };
-    fetch('https://fresh.heegu.net:3041/api/order', {
+    fetch('/api/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
