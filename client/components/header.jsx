@@ -28,7 +28,7 @@ class Header extends Component {
           </div>
         </div>
         <div className="col text-right text-white cart-custom" >
-          <span className="mx-2 mb-1 text-left">{cartItemCount || ''}</span>
+          <span className="mx-2 mb-1 text-left cart-text-custom" onClick={handleClickCartDetail}>{cartItemCount || ''}</span>
           <span
             className={'mx-2 cart-icon-custom'}
             onClick={handleClickCartDetail}>
