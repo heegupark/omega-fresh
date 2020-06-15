@@ -23,7 +23,7 @@ class ProductList extends Component {
   getProducts(page, itemsPerPage) {
     const _page = page || 1;
     const _itemsPerPage = itemsPerPage || 6;
-    fetch(`/api/products/1/${_itemsPerPage * _page}`)
+    fetch(`https://fresh.heegu.net:3041/api/products/1/${_itemsPerPage * _page}`)
       .then(res => res.json())
       .then(data => {
         this.setState({

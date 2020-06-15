@@ -16,7 +16,7 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const { productId } = this.props;
-    fetch(`/api/products/${productId}`, {
+    fetch(`https://fresh.heegu.net:3041/api/products/${productId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
