@@ -1,5 +1,6 @@
 require('dotenv/config');
 const express = require('express');
+const cors = require('cors');
 const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
@@ -14,6 +15,7 @@ app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
 app.use(express.json());
+app.user(cors());
 
 app.get('/api/products', (req, res, next) => {
   const sql = `
