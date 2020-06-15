@@ -20,8 +20,11 @@
     - to view the product(s) in the cart
     - to remove the product from the cart
     - to receive the order and place the order
-3. Mainly used React to create all HTML elements(virtual DOM) to dynamically display all data using DOM upon the data from PostgreSQL database via API server created by using Node.js
-4. Support most of mobile devices(iPad - Landsacpe/Portrait, iPhone X - Landsacpe/Portrait, iPhone 6s/7s/8s - Landsacpe/Portrait, iPhone 6/7/8 - Landsacpe/Portrait, and so on)
+3. Heavily used React to create all HTML elements(virtual DOM) to dynamically display all data using DOM upon the data from PostgreSQL database via API server created by using Node.js
+4. Used express and express session module to retrieve the cart information that the user already put items in the cart
+5. Uses pg module to connect PostgreSQL database
+6. Used AWS EC2 for web and API server and AWS RDS for PostgreSQL database
+7. Support most of mobile devices(iPad - Landsacpe/Portrait, iPhone X - Landsacpe/Portrait, iPhone 6s/7s/8s - Landsacpe/Portrait, iPhone 6/7/8 - Landsacpe/Portrait, and so on)
 
 ## Planned Features
 1. User can view products.
@@ -37,6 +40,8 @@
 4. React and JavaScript Object Oriented Programming for better functionalities and to increase the re-usage of codes
 5. Experienced to create API server using node.js to process the data with communicating with database and pass the data to client
 6. Experienced to create PostgreSQL database to store and retrieve data upon the request of a client via API server
+7. Experienced to store and handle session data using express session
+8. Experienced to deploy the web and API server into AWS EC2 and create PostgreSQL database into AWS RDS
 
 ## Live Site
 * You can see and test the live version here: <a href="https://fresh.heegu.net" target="blank">fresh.heegu.net</a>
