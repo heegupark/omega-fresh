@@ -10,12 +10,10 @@ const https = require('https');
 const fs = require('fs');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
-
-app.use(express.json());
-app.use(cors());
 
 app.get('/api/products', (req, res, next) => {
   const sql = `
@@ -154,6 +152,7 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       req.session.cartId = result.cartId;
+      req.session.save();
       const sqlForCreateCartItem = `
           INSERT INTO "cartItems" ("cartId", "productId", "price")
           VALUES ($1, $2, $3)
@@ -167,6 +166,7 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       req.session.cartItemId = result.cartItemId;
+      req.session.save();
       const sqlForRetriveData = `
              SELECT "c"."cartItemId",
                     "c"."price",
