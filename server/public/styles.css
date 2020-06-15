@@ -94,7 +94,7 @@ main {
   margin-top: 5px;
 }
 
-.cart-icon-custom {
+.cart-icon-custom, .cart-text-custom {
   cursor: pointer;
 }
 
