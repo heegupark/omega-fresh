@@ -30,27 +30,34 @@ class CheckoutForm extends Component {
   }
 
   handleNameChange(event) {
+    if (event.target.value.length < 2) { event.target.value = event.target.value.trim(); }
     this.setState({
       name: event.target.value
     });
   }
 
   handleCreditCardChange(event) {
-    let number = event.target.value.split(' ').join('');
-    this.setState({
-      creditCard: number
-    });
-    number = number.substring(0, 4) + ' ' + number.substring(4, 8) + ' ' + number.substring(8, 12) + ' ' + number.substring(12);
-    event.target.value = number;
+    if (event.target.value.length < 2) {
+      event.target.value = event.target.value.trim();
+    } else {
+      let number = event.target.value.split(' ').join('');
+      this.setState({
+        creditCard: number
+      });
+      number = number.substring(0, 4) + ' ' + number.substring(4, 8) + ' ' + number.substring(8, 12) + ' ' + number.substring(12);
+      event.target.value = number;
+    }
   }
 
   handleAddress1Change(event) {
+    if (event.target.value.length < 2) { event.target.value = event.target.value.trim(); }
     this.setState({
       address1: event.target.value
     });
   }
 
   handleAddress2Change(event) {
+    if (event.target.value.length < 2) { event.target.value = event.target.value.trim(); }
     this.setState({
       address2: event.target.value
     });
@@ -63,6 +70,7 @@ class CheckoutForm extends Component {
   }
 
   handleZipcodeChange(event) {
+    if (event.target.value.length < 2) { event.target.value = event.target.value.trim(); }
     this.setState({
       zipcode: event.target.value
     });
@@ -70,25 +78,30 @@ class CheckoutForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const { name, creditCard, address1, address2, state, zipcode } = this.state;
     const newOrder = {
-      name: this.state.name,
-      creditCard: this.state.creditCard,
-      address1: this.state.address1,
-      address2: this.state.address2,
-      state: this.state.state,
-      zipcode: this.state.zipcode
+      name: name,
+      creditCard: creditCard,
+      address1: address1,
+      address2: address2,
+      state: state,
+      zipcode: zipcode
     };
-    this.props.onSubmit(newOrder);
-    this.setState({
-      name: '',
-      creditCard: '',
-      address1: '',
-      address2: '',
-      state: '',
-      zipcode: '',
-      isCheckedOut: true,
-      cartGroupByItems: this.props.cartGroupByItems
-    });
+
+    if (name.trim() && creditCard.trim() && address1.trim() && state.trim() && zipcode.trim()) {
+      this.props.onSubmit(newOrder);
+      this.setState({
+        name: '',
+        creditCard: '',
+        address1: '',
+        address2: '',
+        state: '',
+        zipcode: '',
+        isCheckedOut: true,
+        cartGroupByItems: this.props.cartGroupByItems
+      });
+    }
+
   }
 
   render() {
