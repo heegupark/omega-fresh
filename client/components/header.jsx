@@ -20,10 +20,10 @@ class Header extends Component {
     const oddOrEven = cartItemCount % 2 === 1;
     const { handleClickCartDetail, handleLogoClick } = this;
     return (
-      <header className="row bg-dark pt-3 pb-1 mb-3">
-        <div className="col">
+      <header className="row bg-dark pt-2 pb-1 mb-3">
+        <div className="col-7">
           <div className="shop-title-custom">
-            <img className="logo-img mb-2" src="/images/o-logo.png"></img>
+            <img className="logo-img mb-2" src="/images/o-logo.png" onClick={handleLogoClick}></img>
             <span className="text-light logo-text ml-1" onClick={handleLogoClick}>omega fresh</span>
           </div>
         </div>
