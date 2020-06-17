@@ -13,6 +13,7 @@ main {
 
 .logo-img {
   width: 30px;
+  cursor: pointer;
 }
 
 .logo-text {
@@ -213,8 +214,14 @@ main {
 }
 
 @media (max-width: 575.98px) {
+  .logo-img  {
+    width: 20px;
+    margin-top: 10px;
+  }
+
   .logo-text {
-    display: none;
+    font-size: 18px;
+    padding-bottom: 10px;
   }
 
   .shop-title-custom {
@@ -224,6 +231,7 @@ main {
 
   .cart-custom {
     margin-right: 1%;
+    margin-top: 14px;
     font-size: 16px;
   }
 
@@ -233,5 +241,15 @@ main {
 
   .card-footer-custom-cart {
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 260px) {
+  .logo-img  {
+    width: 20px;
+  }
+
+  .logo-text {
+    display: none
   }
 }
