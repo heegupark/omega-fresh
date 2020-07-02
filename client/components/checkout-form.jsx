@@ -122,7 +122,7 @@ class CheckoutForm extends Component {
       <div className="fade-in">
         <div className="row">
           <div className="col-sm">
-            <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
+            <span onClick={handleBackToCatalogClick} className="text-secondary cursor-pointer" >{'< Continue Shopping'}</span>
           </div>
         </div>
         <div className="row my-2">
@@ -211,7 +211,7 @@ class CheckoutForm extends Component {
       <div className="fade-in">
         <div className="row">
           <div className="col-sm">
-            <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
+            <span onClick={handleBackToCatalogClick} className="text-secondary cursor-pointer" >{'< Continue Shopping'}</span>
           </div>
         </div>
         <OrderComplete

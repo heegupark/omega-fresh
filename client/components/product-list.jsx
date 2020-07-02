@@ -82,7 +82,7 @@ class ProductList extends Component {
           ? (
             <div className="row">
               <div className="col-sm text-center">
-                <div className="load-more my-2" onClick={handleLoadMoreBtnClick}>load more</div>
+                <div className="cursor-pointer my-2" onClick={handleLoadMoreBtnClick}>load more</div>
               </div>
             </div>
           )
@@ -90,7 +90,7 @@ class ProductList extends Component {
         }
         <div className="row">
           <div className="col-sm text-center">
-            <div className="load-more my-2" onClick={handleBackToTopBtnClick}>back to top</div>
+            <div className="cursor-pointer my-2" onClick={handleBackToTopBtnClick}>back to top</div>
           </div>
         </div>
       </div>

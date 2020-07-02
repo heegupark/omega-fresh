@@ -17,7 +17,7 @@ class CartSummary extends Component {
   }
 
   render() {
-    const { formattedCurrency, total, addToCart, removeFromCart, cartGroupByItems } = this.props;
+    const { formattedCurrency, total, addToCart, removeFromCart, cartGroupByItems, setView } = this.props;
     const { handleBackToCatalogClick, handleCheckoutClick } = this;
 
     // Group by item
@@ -27,7 +27,7 @@ class CartSummary extends Component {
       <div className="fade-in">
         <div className="row">
           <div className="col-sm">
-            <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Continue Shopping'}</span>
+            <span onClick={handleBackToCatalogClick} className="text-secondary cursor-pointer" >{'< Continue Shopping'}</span>
           </div>
         </div>
         <div className="row my-2">
@@ -48,6 +48,7 @@ class CartSummary extends Component {
                     return <CartSummaryItem
                       key={index}
                       productId={productId}
+                      setView={setView}
                       name={name}
                       price={price}
                       image={image}

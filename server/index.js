@@ -285,7 +285,7 @@ app.use((err, req, res, next) => {
 if (process.env.ENV === 'DEV') {
   app.listen(process.env.PORT, () => {
     // eslint-disable-next-line no-console
-    console.log('Listening on port', process.env.PORT);
+    console.log('[http] Server listening on port', process.env.PORT);
   });
 } else if (process.env.ENV === 'LIVE') {
   https.createServer({
@@ -294,6 +294,6 @@ if (process.env.ENV === 'DEV') {
   },
   app).listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
-    console.log(`[https] JSON Server listening on port ${process.env.PORT}`);
+    console.log(`[https] Server listening on port ${process.env.PORT}`);
   });
 }

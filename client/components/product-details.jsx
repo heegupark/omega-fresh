@@ -79,7 +79,7 @@ class ProductDetails extends Component {
             <div className="col-sm card pt-3 card-custom-not-hover">
               <div className="row">
                 <div className="col-sm">
-                  <span onClick={handleBackToCatalogClick} className="text-secondary back-to-catalog" >{'< Back to Catalog'}</span>
+                  <span onClick={handleBackToCatalogClick} className="text-secondary cursor-pointer" >{'< Back to Catalog'}</span>
                 </div>
               </div>
               <div className="row my-1">
