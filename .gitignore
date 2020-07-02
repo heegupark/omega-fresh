@@ -5,3 +5,4 @@ node_modules
 .env
 .env.example
 server/sessions
+omega-fresh.code-workspace

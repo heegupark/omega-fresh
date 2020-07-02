@@ -5,6 +5,7 @@ class CartSummaryItem extends Component {
     super();
     this.handleAddToCartClick = this.handleAddToCartClick.bind(this);
     this.handleRemoveFromCartClick = this.handleRemoveFromCartClick.bind(this);
+    this.handleViewDetailClick = this.handleViewDetailClick.bind(this);
   }
 
   handleAddToCartClick() {
@@ -19,16 +20,21 @@ class CartSummaryItem extends Component {
     removeFromCart(removeProduct);
   }
 
+  handleViewDetailClick() {
+    const { productId } = this.props;
+    this.props.setView('details', { productId });
+  }
+
   render() {
-    const { handleAddToCartClick, handleRemoveFromCartClick } = this;
+    const { handleAddToCartClick, handleRemoveFromCartClick, handleViewDetailClick } = this;
     const { name, price, image, shortDescription, amount, formattedCurrency } = this.props;
     return (
       <div className="fade-in row card-deck card my-2">
-        <div className="col-sm my-2">
+        <div className="col-sm my-2 cursor-pointer" onClick={handleViewDetailClick}>
           <img className="img-fluid rounded mx-auto d-block card-custom-not-hover cart-img-custom" src={image} alt={name} />
         </div>
         <div className="col-sm my-2">
-          <p className="h4">{name}</p>
+          <p className="h4 cursor-pointer" onClick={handleViewDetailClick}>{name}</p>
           <p className="h5 text-secondary">{formattedCurrency(price)}</p>
           <p className="h6">{shortDescription}</p>
           <div className="text-center card-footer-custom-cart">

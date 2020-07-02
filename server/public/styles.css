@@ -63,11 +63,7 @@ main {
   border: 0.5px solid black;
 }
 
-.load-more {
-  cursor: pointer;
-}
-
-.back-to-catalog {
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -93,10 +89,6 @@ main {
   font-size: 20px;
   margin-right: 10%;
   margin-top: 5px;
-}
-
-.cart-icon-custom, .cart-text-custom {
-  cursor: pointer;
 }
 
 .cart-img-custom {
