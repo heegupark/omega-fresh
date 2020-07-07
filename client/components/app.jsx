@@ -5,6 +5,7 @@ import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
+import Disclaimer from './Disclaimer';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
-      cartItemCount: 0
+      cartItemCount: 0,
+      isDisclaimerAccepted: localStorage.getItem('omegafreshaccept')
     };
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
@@ -28,6 +30,7 @@ export default class App extends React.Component {
     this.placeOrder = this.placeOrder.bind(this);
     this.getCountById = this.getCountById.bind(this);
     this.groupByItems = this.groupByItems.bind(this);
+    this.handleDisclaimerAccept = this.handleDisclaimerAccept.bind(this);
   }
 
   componentDidMount() {
@@ -171,6 +174,12 @@ export default class App extends React.Component {
     return array;
   }
 
+  handleDisclaimerAccept(accept) {
+    this.setState({
+      isDisclaimerAccepted: accept
+    });
+  }
+
   render() {
     const {
       setView,
@@ -180,10 +189,11 @@ export default class App extends React.Component {
       formattedCurrency,
       getTotal,
       getCountById,
-      groupByItems
+      groupByItems,
+      handleDisclaimerAccept
     } = this;
     const { name, params } = this.state.view;
-    const { cart } = this.state;
+    const { cart, isDisclaimerAccepted } = this.state;
     let element = null;
     switch (name) {
       case 'catalog':
@@ -231,7 +241,14 @@ export default class App extends React.Component {
               total={getTotal(cart)}
               formattedCurrency={formattedCurrency}
               onSubmit={placeOrder}
-              cartGroupByItems={groupByItems(cart)} />
+              cartGroupByItems={groupByItems(cart)}
+              handleDisclaimerAccept={handleDisclaimerAccept} />
+          </main>);
+        break;
+      case 'disclaimer':
+        element = (
+          <main>
+            <Disclaimer />
           </main>);
         break;
     }
@@ -256,6 +273,13 @@ export default class App extends React.Component {
         <div className="container-fluid container-custom">
           <Header cartItemCount={cartItemCount} setView={setView}/>
           {element}
+          {isDisclaimerAccepted
+            ? ''
+            : (
+              <Disclaimer
+                handleDisclaimerAccept={handleDisclaimerAccept}/>
+            )
+          }
           <Footer />
         </div>
       );
