@@ -5,7 +5,7 @@ import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
-import Disclaimer from './Disclaimer';
+import Disclaimer from './disclaimer';
 
 export default class App extends React.Component {
   constructor(props) {
