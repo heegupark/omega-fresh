@@ -25,6 +25,13 @@ class CheckoutForm extends Component {
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this);
   }
 
+  componentDidMount() {
+    const disclaimerAccept = localStorage.getItem('omegafreshaccept');
+    if (!disclaimerAccept) {
+      this.props.handleDisclaimerAccept(false);
+    }
+  }
+
   handleBackToCatalogClick() {
     this.props.setView('catalog', {});
   }
