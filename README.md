@@ -22,7 +22,7 @@
     - to receive the order and place the order
 3. Heavily used React to create all HTML elements(virtual DOM) to dynamically display all data using DOM upon the data from PostgreSQL database via API server created by using Node.js
 4. Used Express and Express session module to retrieve the cart information that the user already put items in the cart
-5. Uses pg module to connect PostgreSQL database
+5. Used pg module to connect PostgreSQL database
 6. Used AWS EC2 for web and API server and AWS RDS for PostgreSQL database
 7. Support most of mobile devices(iPad - Landsacpe/Portrait, iPhone X - Landsacpe/Portrait, iPhone 6s/7s/8s - Landsacpe/Portrait, iPhone 6/7/8 - Landsacpe/Portrait, and so on)
 
