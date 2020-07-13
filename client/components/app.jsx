@@ -273,7 +273,7 @@ export default class App extends React.Component {
         <div className="container-fluid container-custom">
           <Header cartItemCount={cartItemCount} setView={setView}/>
           {element}
-          {!isDisclaimerAccepted
+          {isDisclaimerAccepted
             ? ''
             : (
               <Disclaimer
