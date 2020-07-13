@@ -70,7 +70,14 @@ class ProductListItem extends Component {
             amount > 0
               ? (
                 <div className="text-center card-footer-custom mb-2">
-                  <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
+                  <button
+                    className="btn btn-outline-secondary btn-sm fade-in"
+                    onClick={handleRemoveFromCartClick}>
+                    {amount === 1
+                      ? (<i className="fas fa-trash-alt"></i>)
+                      : (<i className="fas fa-minus"></i>)
+                    }
+                  </button>
                   <span className="mx-5">{amount}</span>
                   <button autoFocus className="btn btn-outline-dark btn-sm fade-in" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
                 </div>

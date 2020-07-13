@@ -117,7 +117,7 @@ class ProductDetails extends Component {
                     <div className="col my-auto text-center">
                       <button className="btn btn-outline-secondary btn-sm fade-in" onClick={handleMinusBtnClick}><i className="fas fa-minus"></i></button>
                       <span
-                        className="text-center bg-light amount-custom mx-3">
+                        className="text-center amount-custom mx-3">
                         {amount}</span>
                       <button autoFocus className="btn btn-outline-secondary btn-sm fade-in" onClick={handlePlusBtnClick}><i className="fas fa-plus"></i></button>
                     </div>

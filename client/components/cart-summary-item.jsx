@@ -39,7 +39,14 @@ class CartSummaryItem extends Component {
           <p className="h6">{shortDescription}</p>
           <div className="text-center card-footer-custom-cart">
             <hr></hr>
-            <button className="btn btn-sm btn-outline-secondary" onClick={handleRemoveFromCartClick}><i className="fas fa-minus"></i></button>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={handleRemoveFromCartClick}>
+              {amount === 1
+                ? (<i className="fas fa-trash-alt"></i>)
+                : (<i className="fas fa-minus"></i>)
+              }
+            </button>
             <span className="mx-5 amount-custom">{amount}</span>
             <button className="btn btn-sm btn-outline-dark" onClick={handleAddToCartClick}><i className="fas fa-plus"></i></button>
           </div>

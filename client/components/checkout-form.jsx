@@ -135,6 +135,7 @@ class CheckoutForm extends Component {
         <div className="row my-2">
           <div className="col-sm">
             <span className="h4 text-dark checkout-title" >Check Out</span>
+            <span className="h6 text-danger ml-3">* Please DO NOT use real payment information. This app is created strictly for demonstration purposes.</span>
           </div>
         </div>
         <div className="row my-2">
